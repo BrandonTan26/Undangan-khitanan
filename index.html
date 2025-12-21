@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Khitanan Devano</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0b132b;
+  --card:#1c2541;
+  --accent:#fca311;
+  --text:#e5e5e5;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  text-align:center;
+}
+
+/* ===== COVER ===== */
+.cover{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle at top,#1c2541,#0b132b);
+  position:relative;
+  overflow:hidden;
+}
+
+.cover img.main{
+  width:180px;
+  border-radius:18px;
+  box-shadow:0 18px 45px rgba(0,0,0,.65);
+  margin:22px 0;
+}
+
+h1{margin:10px 0;font-size:2rem}
+h2{
+  font-size:.85rem;
+  letter-spacing:3px;
+  color:var(--accent);
+  font-weight:400;
+}
+
+.btn{
+  margin-top:26px;
+  padding:12px 32px;
+  border:none;
+  border-radius:30px;
+  background:var(--accent);
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* ===== ASTRONAUT ACCENT ===== */
+.astronaut{
+  position:absolute;
+  width:70px;
+  right:8%;
+  top:18%;
+  opacity:.45;
+  animation:float 6s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+
+/* ===== CONTENT ===== */
+section{padding:60px 20px}
+
+.card{
+  max-width:620px;
+  margin:0 auto 40px;
+  background:var(--card);
+  border-radius:22px;
+  padding:32px;
+}
+
+/* ===== COUNTDOWN ===== */
+.countdown{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.countdown div{
+  background:#0b132b;
+  border-radius:14px;
+  padding:16px 6px;
+}
+
+.countdown span{
+  font-size:1.6rem;
+  font-weight:600;
+  display:block;
+}
+
+/* ===== MAP ===== */
+.map{
+  display:inline-block;
+  margin-top:16px;
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  font-size:.85rem;
+  opacity:.8;
+  padding-bottom:40px;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:480px){
+  h1{font-size:1.6rem}
+  .countdown{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKSOUND -->
+<audio id="bgm" loop>
+  <source src="backsound.mp3" type="audio/mpeg">
+</audio>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <img class="astronaut" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/FullMoon2010.jpg/120px-FullMoon2010.jpg" alt="">
+  <h2>UNDANGAN KHITANAN</h2>
+  <img src="foto.png" class="main" alt="Devano">
+  <h1>Ananda Devano Vandrean Tan</h1>
+  <p style="opacity:.8">A New Journey Begins 🚀</p>
+  <button class="btn" onclick="openInvite()">Buka Undangan</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content" style="display:none">
+
+<section>
+  <div class="card">
+    Dengan memohon rahmat Allah SWT, kami bermaksud mengundang
+    Bapak/Ibu/Saudara/i untuk menghadiri acara khitanan putra kami.
+  </div>
+
+  <div class="card">
+    <h3>📅 Informasi Acara</h3>
+    <p>
+      <strong>Minggu, 28 Desember 2025</strong><br>
+      Pukul <strong>10.00 WIB – Selesai</strong>
+    </p>
+    <p>
+      Perum Banten Indah Permai<br>
+      Blok K3 No. 21
+    </p>
+    <a class="map" href="https://maps.app.goo.gl/r1wtRWbZnXWdZevs5" target="_blank">
+      📍 Lihat Lokasi
+    </a>
+  </div>
+
+  <div class="card">
+    <h3>⏳ Menuju Hari H</h3>
+    <div class="countdown">
+      <div><span id="d">00</span>Hari</div>
+      <div><span id="h">00</span>Jam</div>
+      <div><span id="m">00</span>Menit</div>
+      <div><span id="s">00</span>Detik</div>
+    </div>
+  </div>
+
+  <div class="card">
+    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
+    Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+    <br><br>
+    <strong>Brandon Tan & Fitri Haryanti</strong>
+  </div>
+</section>
+
+<footer>
+  <div style="margin-bottom:6px;">
+    © 2025 • Khitanan Devano Vandrean Tan
+  </div>
+  <div style="font-size:.8rem; opacity:.85;">
+    Crafted with ❤️ by<br>
+    <strong>D&D A Digital Creative Studio</strong>
+  </div>
+</footer>
+
+</div>
+
+<script>
+const bgm = document.getElementById('bgm');
+bgm.volume = 0.35;
+
+function openInvite(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('content').style.display='block';
+  bgm.play();
+  window.scrollTo(0,0);
+}
+
+const target = new Date("2025-12-28T10:00:00").getTime();
+setInterval(()=>{
+  const now = new Date().getTime();
+  const diff = target - now;
+  if(diff < 0) return;
+  d.innerText = Math.floor(diff / (1000*60*60*24));
+  h.innerText = Math.floor((diff / (1000*60*60)) % 24);
+  m.innerText = Math.floor((diff / (1000*60)) % 60);
+  s.innerText = Math.floor((diff / 1000) % 60);
+},1000);
+</script>
+
+</body>
+</html>
