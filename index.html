@@ -1,891 +1,502 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Undangan Khitanan Devano</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ================= THEME ================= */
     :root{
-      --bg:#050b2e;
-      --card:rgba(15,27,76,.92);
-      --card2:rgba(10,16,48,.86);
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.78);
-      --accent:#ffd166;
-      --accent2:#7bdff2;
-      --stroke:rgba(255,255,255,.12);
-      --shadow:0 25px 60px rgba(0,0,0,.55);
-      --radius:34px;
-      --nav-h:86px;
+      --bg:#020617;
+      --card:#0b1220;
+      --text:#e5e7eb;
+      --muted:#a3a3a3;
+      --line:rgba(255,255,255,.10);
+      --btn:#22c55e;
+      --btnText:#04120a;
+      --radius:16px;
+
+      --maxw:720px;
+      --px:20px;
+      --sec:28px;
     }
-    body.light{
-      --bg:#eef2ff;
-      --card:rgba(255,255,255,.92);
-      --card2:rgba(255,255,255,.78);
-      --text:#1c1c1c;
-      --muted:rgba(28,28,28,.72);
-      --accent:#3a86ff;
-      --accent2:#ff6b6b;
-      --stroke:rgba(0,0,0,.08);
-      --shadow:0 25px 60px rgba(0,0,0,.18);
+    @media (min-width:768px){
+      :root{ --px:28px; --sec:36px; }
     }
 
     *{ box-sizing:border-box; }
-    html{ scroll-behavior:smooth; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background: radial-gradient(1200px 800px at 70% 10%, rgba(255,209,102,.16), transparent 55%),
-                  radial-gradient(900px 700px at 10% 90%, rgba(123,223,242,.12), transparent 55%),
-                  var(--bg);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
+      background: var(--bg);
       overflow-x:hidden;
-      transition: background .35s, color .35s;
     }
 
-    a{ color:var(--accent); text-decoration:none; }
-    a:hover{ text-decoration:underline; }
-
-    /* ================= BACKGROUND FX (SAFE) ================= */
-    #bg{
+    /* STAR BACKGROUND (STATIC, SIMPLE) */
+    body::before{
+      content:"";
       position:fixed;
       inset:0;
-      z-index:0;           /* ALWAYS BEHIND */
-      pointer-events:none; /* NEVER BLOCK UI */
-      overflow:hidden;
-    }
-    .star{
-      position:absolute;
-      width:3px; height:3px;
-      background:#fff;
-      border-radius:50%;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,.10) 1px, transparent 1px),
+        radial-gradient(circle at 28% 72%, rgba(255,255,255,.07) 1px, transparent 1px),
+        radial-gradient(circle at 55% 30%, rgba(255,255,255,.08) 1px, transparent 1px),
+        radial-gradient(circle at 82% 22%, rgba(255,255,255,.06) 1px, transparent 1px),
+        radial-gradient(circle at 78% 78%, rgba(255,255,255,.07) 1px, transparent 1px),
+        radial-gradient(circle at 40% 92%, rgba(255,255,255,.06) 1px, transparent 1px),
+        radial-gradient(circle at 92% 48%, rgba(255,255,255,.06) 1px, transparent 1px),
+        radial-gradient(circle at 8% 55%,  rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 140px 140px;
       opacity:.85;
-      filter: drop-shadow(0 0 6px rgba(255,255,255,.35));
-    }
-    .twinkle{
-      animation: twinkle 4.6s ease-in-out infinite;
-    }
-    @keyframes twinkle{
-      50%{ opacity:.28; transform:scale(.75); }
-    }
-    .shoot{
-      position:absolute;
-      width:160px;
-      height:2px;
-      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.9), rgba(255,255,255,0));
-      opacity:.0;
-      transform:rotate(-20deg);
-      animation: shoot 6.5s linear infinite;
-    }
-    @keyframes shoot{
-      0%{ opacity:0; transform:translate(-30vw, -10vh) rotate(-20deg); }
-      10%{ opacity:.85; }
-      20%{ opacity:0; transform:translate(110vw, 60vh) rotate(-20deg); }
-      100%{ opacity:0; }
     }
 
-    /* ================= TOP BAR ================= */
-    .topbar{
-      position:fixed;
-      top:0; left:0; right:0;
-      height:var(--nav-h);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:16px 18px;
-      z-index:999;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0));
-    }
-    body.light .topbar{
-      background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,0));
+    /* KILL ALL ANIMATIONS / TRANSITIONS */
+    *,
+    *::before,
+    *::after{
+      animation:none !important;
+      transition:none !important;
+      transform:none !important;
     }
 
-    .brand{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      user-select:none;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      border-radius:999px;
-      background:var(--card2);
-      border:1px solid var(--stroke);
-      box-shadow: 0 14px 40px rgba(0,0,0,.18);
-    }
-    .btn-ico{
-      width:42px; height:42px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:var(--card2);
-      display:grid; place-items:center;
-      cursor:pointer;
-      transition:.2s transform, .2s background;
-      user-select:none;
-    }
-    .btn-ico:hover{ transform:translateY(-1px); }
-    .btn-ico:active{ transform:translateY(0px) scale(.98); }
-
-    /* ================= LAYOUT ================= */
-    .layer{
-      position:relative;
-      z-index:5; /* ABOVE BG */
-      min-height:100vh;
-    }
-    .container{
-      width:min(1080px, 92vw);
-      margin: 0 auto;
-    }
-    section{
-      padding: calc(var(--nav-h) + 34px) 0 86px;
-    }
-
-    /* ================= HERO COVER ================= */
-    .hero{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      position:relative;
-      overflow:hidden;
-      padding-top: var(--nav-h);
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:24px;
-      align-items:center;
-    }
-
-    .glass{
-      background:var(--card);
-      border:1px solid var(--stroke);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      backdrop-filter: blur(10px);
-    }
-
-    .hero-card{
-      padding:38px 34px;
-    }
-
-    .kicker{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.06);
-      color:var(--muted);
-      font-weight:600;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-      font-size:.82rem;
-    }
-    body.light .kicker{ background:rgba(0,0,0,.04); }
-
-    .title{
-      margin:16px 0 10px;
-      font-size: clamp(1.8rem, 3.8vw, 3rem);
-      line-height:1.12;
-      letter-spacing:.2px;
-    }
-    .subtitle{
-      margin:0;
-      color:var(--muted);
-      font-size:1.02rem;
-      line-height:1.7;
-    }
-
-    .hero-actions{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:22px;
-    }
-    .btn{
-      border:none;
-      padding:14px 18px;
-      border-radius:999px;
-      cursor:pointer;
-      font-weight:700;
-      letter-spacing:.3px;
-      transition:.2s transform, .2s filter;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-    }
-    .btn:hover{ transform: translateY(-1px); filter:brightness(1.05); }
-    .btn:active{ transform: translateY(0) scale(.99); }
-    .btn.primary{ background:var(--accent); color:#121212; }
-    .btn.secondary{ background:rgba(255,255,255,.08); color:var(--text); border:1px solid var(--stroke); }
-    body.light .btn.secondary{ background:rgba(0,0,0,.04); }
-
-    .hero-photo{
-      padding:18px;
-      display:grid;
-      gap:12px;
-      place-items:center;
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-photo img{
-      width:min(360px, 72vw);
-      border-radius:28px;
-      box-shadow: 0 26px 70px rgba(0,0,0,.55);
-      transform: translateZ(0);
-    }
-    .badge{
-      position:absolute;
-      top:16px; left:16px;
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.18);
-      color:#fff;
-      font-weight:700;
-      letter-spacing:.4px;
-      backdrop-filter: blur(10px);
-      font-size:.85rem;
-    }
-    body.light .badge{
-      background:rgba(255,255,255,.70);
-      border:1px solid rgba(0,0,0,.10);
-      color:#111;
-    }
-
-    /* decorative planet + orbit */
-    .planet{
-      position:absolute;
-      width:170px; height:170px;
-      border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, #fff0b6, #ffd166, #ff9f1c);
-      left:-30px;
-      bottom:80px;
-      box-shadow:0 0 90px rgba(255,209,102,.35);
-      opacity:.95;
-      z-index:1;
-    }
-    .orbit{
-      position:absolute;
-      width:290px; height:290px;
-      border:1px dashed rgba(255,255,255,.35);
-      border-radius:50%;
-      left:-64px;
-      bottom:36px;
-      animation:spin 34s linear infinite;
-      z-index:1;
-    }
-    @keyframes spin{ to{ transform:rotate(360deg); } }
-
-    .astronaut{
-      position:absolute;
-      width:170px;
-      right:4%;
-      top:18%;
-      z-index:2;
-      opacity:.92;
-      filter: drop-shadow(0 18px 35px rgba(0,0,0,.35));
-      animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float{ 50%{ transform:translateY(-26px); } }
-
-    /* ================= CINEMATIC OPENING ================= */
-    .opening{
-      position:fixed;
-      inset:0;
-      z-index:1200;
-      display:grid;
-      place-items:center;
-      background: radial-gradient(900px 600px at 50% 30%, rgba(255,209,102,.18), transparent 60%),
-                  rgba(0,0,0,.72);
-      backdrop-filter: blur(10px);
-      padding:24px;
-    }
-    body.light .opening{
-      background: radial-gradient(900px 600px at 50% 30%, rgba(58,134,255,.16), transparent 60%),
-                  rgba(255,255,255,.78);
-    }
-    .opening-card{
-      width:min(860px, 92vw);
-      padding:34px 26px;
-      border-radius:36px;
-      border:1px solid var(--stroke);
-      background:rgba(0,0,0,.35);
-      color:#fff;
-      text-align:center;
-    }
-    body.light .opening-card{
-      background:rgba(255,255,255,.70);
-      color:#111;
-    }
-    .opening-card h1{
-      margin:10px 0 6px;
-      font-size: clamp(1.6rem, 4.1vw, 2.6rem);
-      letter-spacing:.2px;
-    }
-    .opening-card p{
+    .wrap{
+      max-width:var(--maxw);
       margin:0 auto;
-      max-width: 700px;
-      line-height:1.75;
-      opacity:.92;
-    }
-    .opening-card .line{
-      width:120px;
-      height:1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
-      margin:16px auto;
-    }
-    body.light .opening-card .line{
-      background: linear-gradient(90deg, transparent, rgba(0,0,0,.35), transparent);
+      padding:0 var(--px) var(--sec);
     }
 
-    /* ================= CONTENT CARDS ================= */
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-    }
+    .section{ padding: var(--sec) 0; }
+
     .card{
-      padding:28px 22px;
+      background:rgba(11,18,32,.88);
+      border:1px solid var(--line);
       border-radius:var(--radius);
-      border:1px solid var(--stroke);
-      background:var(--card);
-      box-shadow:var(--shadow);
+      padding:18px;
     }
-    .card h2{
+    @media(min-width:768px){
+      .card{ padding:22px; }
+    }
+
+    .h{
       margin:0 0 10px;
-      letter-spacing:.2px;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      font-size:1.05rem;
     }
     .muted{ color:var(--muted); }
 
-    /* ================= REVEAL ================= */
-    .reveal{
-      opacity:0;
-      transform: translateY(24px);
-      transition: opacity .8s ease, transform .8s ease;
-      will-change: opacity, transform;
-    }
-    .reveal.active{
-      opacity:1;
-      transform:none;
-    }
-
-    /* ================= COUNTDOWN ================= */
-    .countdown{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:12px;
-      margin-top:14px;
-    }
-    .cd-box{
-      border-radius:22px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.07);
-      padding:16px 12px;
-      text-align:center;
-    }
-    body.light .cd-box{ background: rgba(0,0,0,.04); }
-    .cd-box span{
-      display:block;
-      font-size: clamp(1.6rem, 3.6vw, 2.2rem);
-      font-weight:800;
-      letter-spacing:.3px;
-    }
-
-    /* ================= GALLERY ================= */
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-      margin-top:14px;
-    }
-    .shot{
-      grid-column: span 6;
+    /* COVER */
+    .cover{
       position:relative;
+      min-height:min(78vh,680px);
+      border-bottom:1px solid var(--line);
       overflow:hidden;
-      border-radius:28px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      cursor:pointer;
-      transition: transform .2s ease, filter .2s ease;
-      min-height: 220px;
     }
-    body.light .shot{ background: rgba(0,0,0,.03); }
-    .shot:hover{ transform: translateY(-2px); filter:brightness(1.02); }
-    .shot img{
+    .cover-media{
+      position:absolute;
+      inset:0;
+      background:#0b1220;
+    }
+    .cover-media img{
       width:100%;
       height:100%;
       object-fit:cover;
+      object-position:center;
       display:block;
-      transform: translateZ(0);
     }
-    .cap{
+    .cover-overlay{
       position:absolute;
-      left:12px; right:12px; bottom:12px;
-      padding:12px 14px;
-      border-radius:18px;
-      background: rgba(0,0,0,.40);
-      border:1px solid rgba(255,255,255,.16);
-      color:#fff;
-      backdrop-filter: blur(10px);
-      font-weight:700;
-      font-size:.92rem;
-      letter-spacing:.2px;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(2,6,23,.72), rgba(2,6,23,.78));
     }
-    body.light .cap{
-      background: rgba(255,255,255,.78);
-      border:1px solid rgba(0,0,0,.10);
-      color:#111;
+    .cover-inner{
+      position:relative;
+      z-index:1;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 22px var(--px);
+      text-align:center;
     }
-    .shot.wide{ grid-column: span 12; min-height: 300px; }
+    .cover-box{
+      width:100%;
+      max-width:560px;
+    }
+    .bismillah{
+      font-weight:600;
+      color:#dbeafe;
+      letter-spacing:.02em;
+      font-size:.95rem;
+      margin-bottom:14px;
+    }
+    .title-small{
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:.9rem;
+      opacity:.95;
+      margin:0 0 12px;
+    }
+    .name{
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      font-size:1.65rem;
+      line-height:1.15;
+      margin:0 0 18px;
+    }
+    @media(min-width:768px){
+      .name{ font-size:2.05rem; }
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      border:none;
+      padding:12px 16px;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
+      text-decoration:none;
+      background:var(--btn);
+      color:var(--btnText);
+      width:100%;
+      max-width:260px;
+      margin:0 auto;
+    }
+    .btn:active{ filter:brightness(.95); }
 
-    /* ================= MODAL ================= */
+    /* INTRO */
+    .intro p{
+      margin:0;
+      font-size:.98rem;
+      line-height:1.7;
+      text-align:center;
+    }
+    .intro .who{
+      margin-top:12px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    /* EVENT GRID */
+    .event-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+    @media(min-width:560px){
+      .event-grid{ grid-template-columns:1fr 1fr; }
+    }
+    .item{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      background:rgba(2,6,23,.20);
+    }
+    .item .label{
+      font-size:.78rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#cbd5e1;
+      margin-bottom:8px;
+      font-weight:800;
+    }
+    .item .value{
+      font-size:1rem;
+      font-weight:800;
+      line-height:1.35;
+    }
+    .item .sub{
+      margin-top:6px;
+      font-size:.9rem;
+      color:var(--muted);
+      line-height:1.45;
+    }
+    .btn-outline{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--text);
+      text-decoration:none;
+      font-weight:800;
+    }
+
+    /* GALLERY */
+    .gallery-head{
+      text-align:center;
+      margin-bottom:12px;
+    }
+    .gallery-head .h{ margin-bottom:6px; }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media(min-width:768px){
+      .grid{ grid-template-columns:1fr 1fr 1fr; }
+    }
+    .ph{
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#0b1220;
+      aspect-ratio:4/5;
+      cursor:pointer;
+    }
+    .ph img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+    }
+
+    /* MODAL */
     .modal{
       position:fixed;
       inset:0;
-      z-index:1400;
       display:none;
-      place-items:center;
-      background: rgba(0,0,0,.72);
+      align-items:center;
+      justify-content:center;
       padding:18px;
+      background:rgba(2,6,23,.88);
+      z-index:9999;
     }
-    .modal.active{ display:grid; }
-    .modal-box{
-      width:min(980px, 96vw);
-      border-radius:28px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.18);
-      background:#0a0f2f;
-      box-shadow:0 30px 90px rgba(0,0,0,.55);
-      position:relative;
-    }
-    body.light .modal-box{ background:#fff; border:1px solid rgba(0,0,0,.10); }
-    .modal-box img{
+    .modal.open{ display:flex; }
+    .modal-inner{
       width:100%;
-      height:min(76vh, 680px);
-      object-fit:contain;
-      background: radial-gradient(900px 600px at 50% 30%, rgba(255,209,102,.16), transparent 65%);
-      display:block;
+      max-width:920px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      background:#020617;
     }
-    body.light .modal-box img{
-      background: radial-gradient(900px 600px at 50% 30%, rgba(58,134,255,.14), transparent 65%);
+    .modal-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 12px;
+      border-bottom:1px solid var(--line);
+      background:rgba(11,18,32,.95);
     }
-    .modal-close{
-      position:absolute;
-      top:12px; right:12px;
-      width:44px; height:44px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.35);
-      color:#fff;
-      display:grid;
-      place-items:center;
+    .modal-top .cap{
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:.85rem;
+      color:#e2e8f0;
+    }
+    .xbtn{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--text);
+      font-weight:900;
       cursor:pointer;
-      backdrop-filter: blur(10px);
-      font-weight:800;
-      user-select:none;
     }
-    body.light .modal-close{
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(0,0,0,.10);
-      color:#111;
+    .modal-img{
+      width:100%;
+      height:min(76vh,720px);
+      background:#000;
+    }
+    .modal-img img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      background:#000;
     }
 
-    /* ================= FOOTER ================= */
-    footer{
-      padding: 36px 0 70px;
+    /* FOOT */
+    .foot p{
+      margin:0;
       text-align:center;
-      color:var(--muted);
-      position:relative;
-      z-index:5;
+      line-height:1.7;
     }
-
-    /* ================= RESPONSIVE ================= */
-    @media (max-width: 900px){
-      .hero-grid{ grid-template-columns:1fr; }
-      .planet, .orbit{ opacity:.55; }
-      .astronaut{ top:10%; width:150px; }
-      .grid2{ grid-template-columns:1fr; }
-      .shot{ grid-column: span 12; }
-      .shot.wide{ min-height: 260px; }
-    }
-    @media (max-width: 520px){
-      .hero-card{ padding:28px 20px; }
-      .hero-photo{ padding:14px; }
-      .countdown{ grid-template-columns: repeat(2, 1fr); }
-      .topbar{ padding:12px 12px; }
-      .pill{ padding:9px 12px; }
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin: 14px 0;
     }
   </style>
 </head>
 
 <body>
-  <!-- BACKGROUND FX -->
-  <div id="bg" aria-hidden="true"></div>
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="brand pill">
-      <div style="font-weight:800;letter-spacing:.3px;">KHITANAN DEVANO</div>
+  <!-- COVER -->
+  <header class="cover" id="top">
+    <div class="cover-media">
+      <img src="foto.png" alt="Cover Devano" onerror="this.style.display='none'">
     </div>
-    <div style="display:flex;gap:10px;align-items:center;">
-      <div class="btn-ico" id="musicBtn" title="Musik">
-        ♪
-      </div>
-      <div class="btn-ico" id="modeBtn" title="Mode">
-        ☀
-      </div>
-    </div>
-  </div>
-
-  <!-- CINEMATIC OPENING (AUTO) -->
-  <div class="opening" id="opening">
-    <div class="opening-card">
-      <div style="font-weight:800;letter-spacing:.6px;text-transform:uppercase;opacity:.95;">
-        بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-      </div>
-      <div class="line"></div>
-      <h1>UNDANGAN KHITANAN</h1>
-      <p>
-        DENGAN MEMOHON RAHMAT DAN RIDHO ALLAH SWT, KAMI MENGUNDANG BAPAK/IBU/SAUDARA/I
-        UNTUK MENGHADIRI ACARA KHITANAN PUTRA KAMI.
-      </p>
-      <div style="margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <button class="btn primary" id="openBtn">BUKA UNDANGAN</button>
-        <button class="btn secondary" id="skipBtn">LEWATI</button>
-      </div>
-      <div style="margin-top:14px;font-size:.92rem;opacity:.9;">
-        <span style="font-weight:800;">DEVANO VANDREAN TAN</span>
+    <div class="cover-overlay"></div>
+    <div class="cover-inner">
+      <div class="cover-box">
+        <div class="bismillah">Bismillahirrahmanirrahim</div>
+        <div class="title-small">Khitanan</div>
+        <h1 class="name">Devano Vandrean Tan</h1>
+        <a class="btn" href="#acara">Buka Undangan</a>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- AUDIO -->
-  <audio id="bgm" loop>
-    <source src="backsound.mp3" type="audio/mpeg" />
-  </audio>
+  <main class="wrap">
 
-  <div class="layer">
-    <!-- HERO -->
-    <div class="hero" id="hero">
-      <div class="planet"></div>
-      <div class="orbit"></div>
-
-      <svg class="astronaut" viewBox="0 0 200 300" fill="white" aria-hidden="true">
-        <circle cx="100" cy="70" r="40"></circle>
-        <rect x="60" y="110" width="80" height="110" rx="25"></rect>
-        <rect x="35" y="120" width="25" height="80" rx="12"></rect>
-        <rect x="140" y="120" width="25" height="80" rx="12"></rect>
-      </svg>
-
-      <div class="container">
-        <div class="hero-grid">
-          <div class="hero-card glass reveal">
-            <div class="kicker">UNDANGAN • KHITANAN • 2025</div>
-            <h1 class="title">ANANDA DEVANO VANDREAN TAN</h1>
-            <p class="subtitle">
-              SEMOGA MENJADI ANAK YANG SHOLEH, SEHAT, BERAKHLAK MULIA, SERTA BERBAKTI KEPADA ORANG TUA.
-            </p>
-
-            <div class="hero-actions">
-              <button class="btn primary" onclick="scrollToId('info')">LIHAT ACARA</button>
-              <button class="btn secondary" onclick="scrollToId('gallery')">LIHAT FOTO</button>
-            </div>
-
-            <div style="margin-top:18px;color:var(--muted);font-size:.95rem;line-height:1.7;">
-              “SATU LANGKAH KECIL MENUJU KEDEWASAAN. SATU DOA BESAR DARI KELUARGA.”
-            </div>
-          </div>
-
-          <div class="hero-photo glass reveal">
-            <div class="badge">FOTO UTAMA</div>
-            <img src="ASSETS/IMAGES/DEVANO-COVER.JPG" alt="Devano - Cover" />
-            <div class="pill" style="justify-content:center;">
-              <div style="font-weight:800;">MINGGU, 28 DESEMBER 2025</div>
-            </div>
-          </div>
-        </div>
+    <!-- INTRO -->
+    <section class="section intro" id="intro">
+      <div class="card">
+        <p>
+          Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i
+          untuk menghadiri acara khitanan putra pertama kami.
+        </p>
+        <div class="who">Brandon Tan</div>
       </div>
-    </div>
+    </section>
 
-    <!-- CONTENT -->
-    <section id="info">
-      <div class="container">
-        <div class="grid2">
-          <div class="card reveal">
-            <h2>DOA &amp; HARAPAN</h2>
-            <div class="muted" style="line-height:1.75;">
-              YA ALLAH, JADIKANLAH ANAK KAMI ANAK YANG SHOLEH, SEHAT, BERAKHLAK MULIA,
-              DAN BERBAKTI KEPADA ORANG TUA.
-            </div>
-            <div style="margin-top:14px;font-weight:800;">AAMIIN YA RABBAL ‘ALAMIIN.</div>
+    <!-- EVENT -->
+    <section class="section" id="acara">
+      <div class="card">
+        <h2 class="h">Detail Acara</h2>
+        <div class="event-grid">
+          <div class="item">
+            <div class="label">Tanggal</div>
+            <div class="value">26 Desember 2025</div>
           </div>
-
-          <div class="card reveal">
-            <h2>WAKTU &amp; TEMPAT</h2>
-            <div class="muted" style="line-height:1.75;">
-              <strong>MINGGU, 28 DESEMBER 2025</strong><br/>
-              PUKUL <strong>10.00 WIB – SELESAI</strong><br/><br/>
-              PERUM BANTEN INDAH PERMAI<br/>
-              BLOK K3 NO. 21
-            </div>
-            <div style="margin-top:14px;">
-              <a href="https://maps.app.goo.gl/r1wtRWbZnXWdZevs5" target="_blank" rel="noopener">📍 LIHAT LOKASI</a>
-            </div>
+          <div class="item">
+            <div class="label">Waktu</div>
+            <div class="value">09.00 WIB – Selesai</div>
           </div>
-        </div>
-
-        <div class="card reveal" style="margin-top:18px;">
-          <h2>HITUNG MUNDUR MENUJU HARI BAHAGIA</h2>
-          <div class="muted">WAKTU TERUS BERJALAN, DOA-DOA KAMI SEMAKIN DEKAT.</div>
-
-          <div class="countdown" aria-label="Hitung mundur">
-            <div class="cd-box"><span id="d">0</span>HARI</div>
-            <div class="cd-box"><span id="h">0</span>JAM</div>
-            <div class="cd-box"><span id="m">0</span>MENIT</div>
-            <div class="cd-box"><span id="s">0</span>DETIK</div>
+          <div class="item">
+            <div class="label">Lokasi</div>
+            <div class="value">Banten Indah Permai</div>
+            <div class="sub">Blok K3 No. 21</div>
           </div>
-        </div>
-
-        <div class="card reveal" style="margin-top:18px;">
-          <h2>UCAPAN TERIMA KASIH</h2>
-          <div class="muted" style="line-height:1.75;">
-            MERUPAKAN SUATU KEHORMATAN DAN KEBAHAGIAAN BAGI KAMI APABILA BAPAK/IBU/SAUDARA/I
-            BERKENAN HADIR DAN MEMBERIKAN DOA RESTU.
-          </div>
-          <div style="margin-top:14px;font-weight:900;letter-spacing:.3px;">
-            BRANDON TAN &amp; FITRI HARYANTI
+          <div class="item">
+            <div class="label">Maps</div>
+            <a class="btn-outline" target="_blank" rel="noopener"
+               href="https://maps.app.goo.gl/a6btRtvwYZqkfsDr5">
+              Lihat Lokasi
+            </a>
+            <div class="sub muted" style="margin-top:8px;">Klik untuk navigasi.</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- GALLERY -->
-    <section id="gallery">
-      <div class="container">
-        <div class="card reveal">
-          <h2>GALERI DEVANO</h2>
-          <div class="muted">
-            SETIAP FOTO ADALAH CERITA. KLIK FOTO UNTUK MEMPERBESAR.
-          </div>
+    <section class="section" id="galeri">
+      <div class="gallery-head">
+        <h2 class="h">Galeri Devano</h2>
+        <div class="muted" style="font-size:.92rem;">Klik foto untuk melihat penuh.</div>
+      </div>
 
-          <div class="gallery">
-            <div class="shot wide" data-src="ASSETS/IMAGES/DEVANO-HERO-01.JPG" data-cap="DEVANO • HERO MOMENT">
-              <img src="ASSETS/IMAGES/DEVANO-HERO-01.JPG" alt="Devano Hero" loading="lazy">
-              <div class="cap">DEVANO • HERO MOMENT</div>
-            </div>
+      <div class="grid" id="gridPhotos">
+        <!-- urutan presisi -->
+        <div class="ph" data-src="DEVANO-CHILDHOOD-01.JPG"><img src="DEVANO-CHILDHOOD-01.JPG" alt="Devano Childhood"></div>
+        <div class="ph" data-src="DEVANO-FAMILY-01.JPG"><img src="DEVANO-FAMILY-01.JPG" alt="Devano Family"></div>
+        <div class="ph" data-src="DEVANO-HERO-01.JPG"><img src="DEVANO-HERO-01.JPG" alt="Devano Hero"></div>
 
-            <div class="shot" data-src="ASSETS/IMAGES/DEVANO-STORY-01.JPG" data-cap="PERJALANAN SANG PAHLAWAN KECIL">
-              <img src="ASSETS/IMAGES/DEVANO-STORY-01.JPG" alt="Devano Story 1" loading="lazy">
-              <div class="cap">PERJALANAN SANG PAHLAWAN KECIL</div>
-            </div>
+        <div class="ph" data-src="DEVANO-STORY-01.JPG"><img src="DEVANO-STORY-01.JPG" alt="Devano Story 1"></div>
+        <div class="ph" data-src="DEVANO-STORY-02.JPG"><img src="DEVANO-STORY-02.JPG" alt="Devano Story 2"></div>
+        <div class="ph" data-src="DEVANO-PRAYER-01.JPG"><img src="DEVANO-PRAYER-01.JPG" alt="Devano Prayer"></div>
 
-            <div class="shot" data-src="ASSETS/IMAGES/DEVANO-STORY-02.JPG" data-cap="LANGKAH KECIL MENUJU MASA DEPAN BESAR">
-              <img src="ASSETS/IMAGES/DEVANO-STORY-02.JPG" alt="Devano Story 2" loading="lazy">
-              <div class="cap">LANGKAH KECIL MENUJU MASA DEPAN BESAR</div>
-            </div>
-
-            <div class="shot" data-src="ASSETS/IMAGES/DEVANO-CHILDHOOD-01.JPG" data-cap="DARI KECIL DENGAN CINTA">
-              <img src="ASSETS/IMAGES/DEVANO-CHILDHOOD-01.JPG" alt="Devano Childhood" loading="lazy">
-              <div class="cap">DARI KECIL DENGAN CINTA</div>
-            </div>
-
-            <div class="shot" data-src="ASSETS/IMAGES/DEVANO-PRAYER-01.JPG" data-cap="DOA DAN HARAPAN">
-              <img src="ASSETS/IMAGES/DEVANO-PRAYER-01.JPG" alt="Devano Prayer" loading="lazy">
-              <div class="cap">DOA DAN HARAPAN</div>
-            </div>
-
-            <div class="shot" data-src="ASSETS/IMAGES/DEVANO-FAMILY-01.JPG" data-cap="DENGAN CINTA DARI KAMI">
-              <img src="ASSETS/IMAGES/DEVANO-FAMILY-01.JPG" alt="Devano Family" loading="lazy">
-              <div class="cap">DENGAN CINTA DARI KAMI</div>
-            </div>
-
-            <div class="shot" data-src="ASSETS/IMAGES/DEVANO-EXTRA-01.JPG" data-cap="MENUJU LANGKAH BARU">
-              <img src="ASSETS/IMAGES/DEVANO-EXTRA-01.JPG" alt="Devano Extra" loading="lazy">
-              <div class="cap">MENUJU LANGKAH BARU</div>
-            </div>
-          </div>
-        </div>
+        <div class="ph" data-src="DEVANO-EXTRA-01.JPG"><img src="DEVANO-EXTRA-01.JPG" alt="Devano Extra"></div>
       </div>
     </section>
 
-    <footer class="reveal" id="footer">
-      © 2025 • KHITANAN DEVANO VANDREAN TAN<br/>
-      CRAFTED WITH ❤️ BY <strong>D&amp;D A DIGITAL CREATIVE STUDIO</strong>
-    </footer>
-  </div>
+    <!-- DOA -->
+    <section class="section" id="doa">
+      <div class="card foot">
+        <h2 class="h" style="text-align:center;">Doa & Harapan</h2>
+        <p>
+          Semoga Devano tumbuh menjadi anak yang sholeh, sehat, berbakti kepada orang tua,
+          serta berguna bagi agama dan bangsa.
+        </p>
+        <div class="divider"></div>
+        <p class="muted">Terima kasih atas doa dan kehadirannya.</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <section class="section" style="padding-top:0;">
+      <div class="muted" style="text-align:center;font-size:.85rem;">
+        © <span id="y"></span> Undangan Khitanan Devano
+      </div>
+    </section>
+
+  </main>
 
   <!-- MODAL -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal-box">
-      <div class="modal-close" id="closeModal" title="Tutup">✕</div>
-      <img id="modalImg" src="" alt="Foto diperbesar">
+  <div class="modal" id="modal">
+    <div class="modal-inner">
+      <div class="modal-top">
+        <div class="cap">Preview Foto</div>
+        <button class="xbtn" id="closeBtn" aria-label="Tutup">✕</button>
+      </div>
+      <div class="modal-img">
+        <img id="modalImg" src="" alt="Preview">
+      </div>
     </div>
   </div>
 
   <script>
-    /* ================= HELPERS ================= */
-    const $ = (q, el=document) => el.querySelector(q);
-    const $$ = (q, el=document) => [...el.querySelectorAll(q)];
+    // year
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-    function scrollToId(id){
-      const el = document.getElementById(id);
-      if(!el) return;
-      el.scrollIntoView({ behavior:'smooth', block:'start' });
-    }
-
-    /* ================= MODE ================= */
-    const modeBtn = $('#modeBtn');
-    modeBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light');
-      modeBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀';
-    });
-
-    /* ================= AUDIO ================= */
-    const bgm = $('#bgm');
-    bgm.volume = 0.35;
-    const musicBtn = $('#musicBtn');
-    let musicOn = false;
-
-    function setMusicIcon(){
-      musicBtn.textContent = musicOn ? '♫' : '♪';
-    }
-    setMusicIcon();
-
-    async function toggleMusic(){
-      try{
-        if(!musicOn){
-          await bgm.play();
-          musicOn = true;
-        }else{
-          bgm.pause();
-          musicOn = false;
-        }
-        setMusicIcon();
-      }catch(e){
-        // ignore autoplay blocking
-      }
-    }
-    musicBtn.addEventListener('click', toggleMusic);
-
-    /* ================= OPENING ================= */
-    const opening = $('#opening');
-    const openBtn = $('#openBtn');
-    const skipBtn = $('#skipBtn');
-
-    function closeOpening(){
-      opening.style.display = 'none';
-      // start reveal scan
-      scanReveal();
-      // optional: start music after user gesture
-      if(!musicOn){
-        toggleMusic();
-      }
-      // go hero
-      scrollToId('hero');
-    }
-    openBtn.addEventListener('click', closeOpening);
-    skipBtn.addEventListener('click', () => {
-      opening.style.display = 'none';
-      scanReveal();
-      scrollToId('hero');
-    });
-
-    /* ================= COUNTDOWN (WIB) ================= */
-    const dEl = $('#d'), hEl = $('#h'), mEl = $('#m'), sEl = $('#s');
-    const target = new Date("2025-12-28T10:00:00+07:00").getTime();
-
-    setInterval(() => {
-      const now = Date.now();
-      const diff = target - now;
-      if(diff <= 0){
-        dEl.textContent = '0'; hEl.textContent = '0'; mEl.textContent = '0'; sEl.textContent = '0';
-        return;
-      }
-      dEl.textContent = Math.floor(diff / (1000*60*60*24));
-      hEl.textContent = Math.floor((diff / (1000*60*60)) % 24);
-      mEl.textContent = Math.floor((diff / (1000*60)) % 60);
-      sEl.textContent = Math.floor((diff / 1000) % 60);
-    }, 1000);
-
-    /* ================= BG STARS (SAFE LAYER) ================= */
-    const bg = document.getElementById('bg');
-
-    // Stars
-    for(let i=0;i<70;i++){
-      const s = document.createElement('div');
-      s.className = 'star twinkle';
-      const size = (Math.random()*2.6)+1.6;
-      s.style.width = size+'px';
-      s.style.height = size+'px';
-      s.style.left = (Math.random()*100)+'%';
-      s.style.top  = (Math.random()*100)+'%';
-      s.style.animationDelay = (Math.random()*4)+'s';
-      bg.appendChild(s);
-    }
-
-    // Shooting stars
-    for(let i=0;i<3;i++){
-      const sh = document.createElement('div');
-      sh.className = 'shoot';
-      sh.style.left = (-20 - Math.random()*40)+'vw';
-      sh.style.top  = (Math.random()*30)+'vh';
-      sh.style.animationDelay = (Math.random()*6)+'s';
-      sh.style.animationDuration = (6 + Math.random()*4)+'s';
-      bg.appendChild(sh);
-    }
-
-    /* ================= REVEAL ON SCROLL ================= */
-    function scanReveal(){
-      $$('.reveal').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if(rect.top < window.innerHeight - 80){
-          el.classList.add('active');
-        }
-      });
-    }
-    window.addEventListener('scroll', scanReveal);
-    window.addEventListener('load', scanReveal);
-
-    /* ================= GALLERY MODAL ================= */
-    const modal = $('#modal');
-    const modalImg = $('#modalImg');
-    const closeModal = $('#closeModal');
+    // modal gallery
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const closeBtn = document.getElementById('closeBtn');
 
     function openModal(src){
       modalImg.src = src;
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden','false');
+      modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
-    function hideModal(){
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden','true');
+    function closeModal(){
+      modal.classList.remove('open');
       modalImg.src = '';
       document.body.style.overflow = '';
     }
 
-    $$('.shot').forEach(el => {
-      el.addEventListener('click', () => {
-        const src = el.getAttribute('data-src');
-        if(src) openModal(src);
+    document.getElementById('gridPhotos').addEventListener('click', (e)=>{
+      const box = e.target.closest('.ph');
+      if(!box) return;
+      const src = box.getAttribute('data-src');
+      if(src) openModal(src);
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{
+      if(e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closeModal();
+    });
+
+    // hide broken images automatically (biar grid rapih)
+    document.querySelectorAll('#gridPhotos img').forEach(img=>{
+      img.addEventListener('error', ()=>{
+        const ph = img.closest('.ph');
+        if(ph) ph.style.display = 'none';
       });
     });
-    closeModal.addEventListener('click', hideModal);
-    modal.addEventListener('click', (e) => {
-      if(e.target === modal) hideModal();
-    });
-    window.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') hideModal();
-    });
   </script>
+
 </body>
 </html>
