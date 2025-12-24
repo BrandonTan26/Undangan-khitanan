@@ -1,893 +1,224 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Undangan Khitanan Devano</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Undangan Khitanan Devano</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --maxw:760px;
+<!-- PRELOAD -->
+<link rel="preload" as="image" href="foto.png">
+<link rel="preload" as="audio" href="backsound.mp3">
 
-      /* DARK (default) */
-      --bg:#020617;
-      --bg2:#050b1a;
-      --card:rgba(11,18,32,.90);
-      --text:#e5e7eb;
-      --muted:#a3a3a3;
-      --line:rgba(255,255,255,.10);
+<style>
+:root{
+  --bg:#f8fafc;
+  --card:#ffffffee;
+  --text:#0f172a;
+  --muted:#64748b;
+  --line:rgba(2,6,23,.12);
+  --accent:#16a34a;
+  --radius:18px;
+  --maxw:820px;
+}
+[data-theme="dark"]{
+  --bg:#020617;
+  --card:#0b1220ee;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --line:rgba(255,255,255,.1);
+  --accent:#22c55e;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{max-width:var(--maxw);margin:auto;padding:0 18px 32px}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.section{padding:28px 0}
 
-      --accent:#22c55e;
-      --accentText:#04120a;
+/* COVER */
+.cover{
+  position:fixed;inset:0;z-index:9999;
+}
+.cover img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.cover::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.55),rgba(0,0,0,.75));
+}
+.cover-inner{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:24px;z-index:2;
+}
+.cover h1{
+  margin:0;
+  font-size:1.8rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  color:#fff;
+}
+.cover p{color:#e5e7eb;margin:6px 0 18px}
+.btn{
+  background:var(--accent);
+  border:none;
+  padding:12px 22px;
+  border-radius:999px;
+  font-weight:900;
+  cursor:pointer;
+}
 
-      --radius:16px;
-      --px:20px;
-      --sec:28px;
+/* TOP */
+.topbar{
+  position:sticky;top:0;z-index:1000;
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+  text-align:center;
+  padding:14px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
 
-      --navH:64px;
-    }
-    [data-theme="light"]{
-      --bg:#f8fafc;
-      --bg2:#eef2ff;
-      --card:rgba(255,255,255,.92);
-      --text:#0f172a;
-      --muted:#475569;
-      --line:rgba(2,6,23,.12);
+/* CATEGORY */
+.chips{
+  position:sticky;top:54px;z-index:999;
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+  display:flex;gap:8px;justify-content:center;
+  padding:8px;
+}
+.chip{
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:800;
+}
+.chip.active{color:var(--text)}
 
-      --accent:#16a34a;
-      --accentText:#052e12;
-    }
-    @media (min-width:768px){
-      :root{ --px:28px; --sec:36px; --navH:70px; }
-    }
+/* PHOTO */
+.photos{display:flex;flex-direction:column;gap:14px}
+.photos img{
+  width:100%;
+  border-radius:16px;
+  border:1px solid var(--line);
+}
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text);
-      background:var(--bg);
-      overflow-x:hidden;
-    }
-
-    /* STATIC STARS (DARK) */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,.10) 1px, transparent 1px),
-        radial-gradient(circle at 28% 72%, rgba(255,255,255,.07) 1px, transparent 1px),
-        radial-gradient(circle at 55% 30%, rgba(255,255,255,.08) 1px, transparent 1px),
-        radial-gradient(circle at 82% 22%, rgba(255,255,255,.06) 1px, transparent 1px),
-        radial-gradient(circle at 78% 78%, rgba(255,255,255,.07) 1px, transparent 1px),
-        radial-gradient(circle at 40% 92%, rgba(255,255,255,.06) 1px, transparent 1px),
-        radial-gradient(circle at 92% 48%, rgba(255,255,255,.06) 1px, transparent 1px),
-        radial-gradient(circle at 8% 55%,  rgba(255,255,255,.06) 1px, transparent 1px);
-      background-size: 140px 140px;
-      opacity:.85;
-    }
-    /* LIGHT: stars jadi halus banget */
-    [data-theme="light"] body::before{
-      background:
-        radial-gradient(circle at 14% 20%, rgba(2,6,23,.10) 1px, transparent 1px),
-        radial-gradient(circle at 30% 70%, rgba(2,6,23,.08) 1px, transparent 1px),
-        radial-gradient(circle at 58% 32%, rgba(2,6,23,.08) 1px, transparent 1px),
-        radial-gradient(circle at 80% 22%, rgba(2,6,23,.07) 1px, transparent 1px),
-        radial-gradient(circle at 76% 78%, rgba(2,6,23,.07) 1px, transparent 1px),
-        radial-gradient(circle at 42% 92%, rgba(2,6,23,.07) 1px, transparent 1px);
-      background-size: 160px 160px;
-      opacity:.28;
-    }
-
-    /* NO fancy animation */
-    *,
-    *::before,
-    *::after{
-      animation:none !important;
-      transition:none !important;
-      transform:none !important;
-    }
-
-    .wrap{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:0 var(--px) var(--sec);
-    }
-    .section{ padding: var(--sec) 0; scroll-margin-top: calc(var(--navH) + 14px); }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:18px;
-    }
-    @media(min-width:768px){ .card{ padding:22px; } }
-
-    .kicker{
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      font-weight:900;
-      font-size:.82rem;
-      color:var(--muted);
-      margin:0 0 10px;
-      text-align:center;
-    }
-    .h{
-      margin:0 0 10px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      font-size:1.05rem;
-      text-align:center;
-    }
-    .muted{ color:var(--muted); }
-
-    /* COVER (standalone) */
-    .cover{
-      position:fixed;
-      inset:0;
-      z-index:9998;
-      overflow:hidden;
-      background:#0b1220;
-    }
-    .cover-media{
-      position:absolute; inset:0;
-    }
-    .cover-media img{
-      width:100%; height:100%;
-      object-fit:cover;
-      object-position:center;
-      display:block;
-    }
-    .cover-overlay{
-      position:absolute; inset:0;
-      background:linear-gradient(to bottom, rgba(2,6,23,.70), rgba(2,6,23,.82));
-    }
-    .cover-inner{
-      position:relative;
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 26px var(--px);
-      text-align:center;
-    }
-    .cover-box{
-      width:100%;
-      max-width:600px;
-    }
-    .arab-big{
-      font-weight:800;
-      font-size:1.35rem;
-      line-height:1.35;
-      letter-spacing:.01em;
-      margin:0 0 6px;
-      color:#e2e8f0;
-    }
-    .arab-sub{
-      font-size:.95rem;
-      color:#cbd5e1;
-      margin:0 0 16px;
-      font-weight:600;
-    }
-    .title-small{
-      font-weight:900;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      font-size:.88rem;
-      margin:0 0 12px;
-      opacity:.95;
-      color:#e5e7eb;
-    }
-    .name{
-      font-weight:900;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      font-size:1.75rem;
-      line-height:1.15;
-      margin:0 0 18px;
-      color:#ffffff;
-    }
-    @media(min-width:768px){ .name{ font-size:2.2rem; } }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:.55rem;
-      border:none;
-      padding:12px 16px;
-      border-radius:999px;
-      font-weight:900;
-      cursor:pointer;
-      text-decoration:none;
-      background:var(--accent);
-      color:var(--accentText);
-      width:100%;
-      max-width:280px;
-      margin:0 auto;
-    }
-    .btn-ghost{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(2,6,23,.18);
-      color:#e5e7eb;
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:800;
-      text-decoration:none;
-      width:100%;
-      max-width:280px;
-      margin:10px auto 0;
-    }
-
-    /* MAIN APP hidden until opened */
-    #app{ display:none; }
-
-    /* TOP NAV */
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      background: color-mix(in srgb, var(--card) 80%, transparent);
-      border-bottom:1px solid var(--line);
-      height:var(--navH);
-      display:flex;
-      align-items:center;
-    }
-    .topbar .inner{
-      max-width:var(--maxw);
-      margin:0 auto;
-      width:100%;
-      padding:0 var(--px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .brand{
-      font-weight:900;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      font-size:.82rem;
-      line-height:1.2;
-      white-space:nowrap;
-    }
-
-    .tabs{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      justify-content:center;
-      flex:1 1 auto;
-      min-width:0;
-    }
-    .tab{
-      text-decoration:none;
-      color:var(--muted);
-      font-weight:800;
-      font-size:.82rem;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid transparent;
-      white-space:nowrap;
-    }
-    .tab.active{
-      color:var(--text);
-      border-color:var(--line);
-      background:rgba(2,6,23,.10);
-    }
-    [data-theme="light"] .tab.active{
-      background:rgba(2,6,23,.06);
-    }
-
-    .tools{
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
-    .iconbtn{
-      width:40px; height:40px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:transparent;
-      color:var(--text);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .pill{
-      border-radius:999px;
-      border:1px solid var(--line);
-      padding:8px 10px;
-      font-weight:800;
-      font-size:.82rem;
-      color:var(--text);
-      background:rgba(2,6,23,.10);
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
-    [data-theme="light"] .pill{ background:rgba(2,6,23,.06); }
-
-    /* CONTENT TYPO */
-    .arab{
-      font-weight:800;
-      font-size:1.15rem;
-      line-height:1.7;
-      text-align:center;
-      margin:0 0 6px;
-    }
-    .latin{
-      text-align:center;
-      margin:0 0 14px;
-      font-weight:600;
-      color:var(--muted);
-    }
-    .para{
-      margin:0;
-      line-height:1.9;
-      text-align:center;
-      font-size:1rem;
-    }
-    .para + .para{ margin-top:12px; }
-
-    /* SCHEDULE grid */
-    .grid2{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-      margin-top:12px;
-    }
-    @media(min-width:560px){
-      .grid2{ grid-template-columns:1fr 1fr; }
-    }
-    .item{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      background:rgba(2,6,23,.10);
-    }
-    [data-theme="light"] .item{ background:rgba(2,6,23,.05); }
-
-    .label{
-      font-size:.78rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--muted);
-      font-weight:900;
-      margin-bottom:8px;
-      text-align:left;
-    }
-    .value{
-      font-weight:900;
-      font-size:1rem;
-      line-height:1.35;
-    }
-    .sub{
-      margin-top:6px;
-      font-size:.92rem;
-      color:var(--muted);
-      line-height:1.5;
-    }
-
-    .btn-outline{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:100%;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:transparent;
-      color:var(--text);
-      text-decoration:none;
-      font-weight:900;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      font-size:.84rem;
-    }
-
-    /* PHOTO (vertical, long, neat) */
-    .photo-stack{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:12px;
-    }
-    .photo{
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:rgba(2,6,23,.12);
-    }
-    [data-theme="light"] .photo{ background:rgba(2,6,23,.05); }
-
-    .photo img{
-      width:100%;
-      display:block;
-      object-fit:cover;
-      aspect-ratio: 4/5; /* uniform vertical feel */
-      background:#0b1220;
-    }
-    @media(min-width:768px){
-      .photo img{ aspect-ratio: 16/18; } /* sedikit lebih panjang di desktop */
-    }
-
-    /* Modal preview */
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      background:rgba(2,6,23,.88);
-      z-index:9999;
-    }
-    .modal.open{ display:flex; }
-    .modal-inner{
-      width:100%;
-      max-width:980px;
-      border:1px solid var(--line);
-      border-radius:18px;
-      overflow:hidden;
-      background:var(--bg);
-    }
-    .modal-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:10px 12px;
-      border-bottom:1px solid var(--line);
-      background:var(--card);
-    }
-    .modal-top .cap{
-      font-weight:900;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      font-size:.82rem;
-      color:var(--muted);
-    }
-    .xbtn{
-      width:40px;
-      height:40px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:transparent;
-      color:var(--text);
-      font-weight:900;
-      cursor:pointer;
-    }
-    .modal-img{
-      width:100%;
-      height:min(80vh,760px);
-      background:#000;
-    }
-    .modal-img img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      display:block;
-      background:#000;
-    }
-
-    /* audio mini */
-    .audio-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-top:12px;
-      flex-wrap:wrap;
-    }
-    .audiosub{
-      font-size:.88rem;
-      color:var(--muted);
-    }
-    .toggle-audio{
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(2,6,23,.10);
-      color:var(--text);
-      padding:10px 12px;
-      font-weight:900;
-      cursor:pointer;
-      white-space:nowrap;
-    }
-    [data-theme="light"] .toggle-audio{ background:rgba(2,6,23,.06); }
-
-    /* footer */
-    .footer{
-      text-align:center;
-      font-size:.86rem;
-      color:var(--muted);
-      padding: 0 0 20px;
-    }
-  </style>
+/* FOOTER */
+.footer{
+  text-align:center;
+  font-size:.85rem;
+  color:var(--muted);
+}
+</style>
 </head>
 
 <body>
 
-  <!-- COVER (separate) -->
-  <div class="cover" id="cover">
-    <div class="cover-media">
-      <img src="foto.png" alt="Cover Devano" onerror="this.style.display='none'">
-    </div>
-    <div class="cover-overlay"></div>
-
-    <div class="cover-inner">
-      <div class="cover-box">
-        <div class="arab-big">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-        <div class="arab-sub">Bismillahirrahmanirrahim</div>
-
-        <div class="title-small">Undangan Khitanan</div>
-        <div class="name">Devano Vandrean Tan</div>
-
-        <button class="btn" id="btnOpen">Buka Undangan</button>
-        <a class="btn-ghost" href="#!" id="btnOpenNoAudio">Buka Tanpa Musik</a>
-
-        <div style="margin-top:14px;font-size:.88rem;color:#cbd5e1;line-height:1.55;">
-          Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i
-          untuk menghadiri acara khitanan putra pertama kami.
-        </div>
-      </div>
+<!-- COVER -->
+<div class="cover" id="cover">
+  <img src="foto.png">
+  <div class="cover-inner">
+    <div>
+      <p>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
+      <p>UNDANGAN KHITANAN</p>
+      <h1>DEVANO VANDREAN TAN</h1>
+      <button class="btn" id="open">Buka Undangan</button>
     </div>
   </div>
+</div>
 
-  <!-- MAIN APP -->
-  <div id="app">
-    <!-- TOP NAV -->
-    <div class="topbar" id="topbar">
-      <div class="inner">
-        <div class="brand">Khitanan Devano</div>
+<!-- APP -->
+<div id="app" style="display:none">
 
-        <div class="tabs" id="tabs">
-          <a class="tab active" href="#jadwal" data-tab="jadwal">Jadwal</a>
-          <a class="tab" href="#foto" data-tab="foto">Foto Devano</a>
-          <a class="tab" href="#maps" data-tab="maps">Maps</a>
-        </div>
+<div class="topbar">KHITANAN DEVANO</div>
 
-        <div class="tools">
-          <button class="pill" id="btnTheme" title="Toggle tema">
-            <span id="themeIcon">🌙</span>
-            <span id="themeText">Dark</span>
-          </button>
-        </div>
-      </div>
-    </div>
+<div class="chips">
+  <a href="#foto" class="chip">Foto</a>
+  <a href="#lokasi" class="chip">Lokasi</a>
+  <a href="#jadwal" class="chip">Jadwal</a>
+</div>
 
-    <main class="wrap">
+<div class="wrap">
 
-      <!-- OPENING TEXT -->
-      <section class="section" id="pembuka">
-        <div class="card">
-          <div class="kicker">Pembuka</div>
+<section class="section card">
+<p style="text-align:center;font-weight:700">
+ٱلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّٰهِ وَبَرَكَاتُهُ
+</p>
+<p style="text-align:center">
+Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan acara khitanan putra pertama kami.
+</p>
+</section>
 
-          <div class="arab">ٱلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّٰهِ وَبَرَكَاتُهُ</div>
-          <div class="latin">Assalamu’alaikum warahmatullahi wabarakatuh</div>
+<section id="foto" class="section card">
+<h3 style="text-align:center">DEVANO VANDREAN TAN</h3>
+<div class="photos">
+<img src="DEVANO-CHILDHOOD-01.JPG">
+<img src="DEVANO-FAMILY-01.JPG">
+<img src="DEVANO-HERO-01.JPG">
+<img src="DEVANO-STORY-01.JPG">
+<img src="DEVANO-STORY-02.JPG">
+<img src="DEVANO-PRAYER-01.JPG">
+<img src="DEVANO-EXTRA-01.JPG">
+</div>
+</section>
 
-          <p class="para">
-            Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan acara
-            khitanan putra pertama kami. Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
-            Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu kepada putra kami.
-          </p>
-          <p class="para">
-            Semoga Devano tumbuh menjadi anak yang sholeh, sehat, berakhlak mulia, serta
-            menjadi penyejuk hati keluarga; berguna bagi agama, bangsa, dan sekitarnya.
-            Atas perhatian dan doa restu yang diberikan, kami ucapkan terima kasih.
-          </p>
+<section id="lokasi" class="section card">
+<p style="text-align:center;font-weight:800">Banten Indah Permai<br>Blok K3 No.21</p>
+<a class="btn" href="https://maps.app.goo.gl/a6btRtvwYZqkfsDr5" target="_blank">Buka Google Maps</a>
+</section>
 
-          <div class="audio-row">
-            <div class="audiosub">Musik akan menyala otomatis setelah undangan dibuka.</div>
-            <button class="toggle-audio" id="btnAudio">🔊 Musik: ON</button>
-          </div>
-        </div>
-      </section>
+<section id="jadwal" class="section card">
+<p style="text-align:center;font-weight:800">
+26 Desember 2025<br>
+09.00 WIB – Selesai
+</p>
+</section>
 
-      <!-- SCHEDULE -->
-      <section class="section" id="jadwal">
-        <div class="card">
-          <div class="kicker">Kategori</div>
-          <h2 class="h">Jadwal Acara</h2>
+<section class="section card">
+<p style="text-align:center;font-weight:800">
+Brandon Tan & Fitri Hariyanti
+</p>
+<p style="text-align:center">
+Orang tua dari Devano Vandrean Tan
+</p>
+</section>
 
-          <div class="grid2">
-            <div class="item">
-              <div class="label">Tanggal</div>
-              <div class="value">26 Desember 2025</div>
-              <div class="sub">Hari Jumat</div>
-            </div>
-            <div class="item">
-              <div class="label">Waktu</div>
-              <div class="value">09.00 WIB – Selesai</div>
-              <div class="sub">Disarankan hadir tepat waktu.</div>
-            </div>
-            <div class="item">
-              <div class="label">Tempat</div>
-              <div class="value">Banten Indah Permai</div>
-              <div class="sub">Blok K3 No. 21</div>
-            </div>
-            <div class="item">
-              <div class="label">Konfirmasi Lokasi</div>
-              <a class="btn-outline" target="_blank" rel="noopener" href="https://maps.app.goo.gl/a6btRtvwYZqkfsDr5">
-                Buka Google Maps
-              </a>
-              <div class="sub">Klik tombol untuk navigasi.</div>
-            </div>
-          </div>
-        </div>
-      </section>
+<div class="footer">
+© <span id="y"></span> Undangan Khitanan Devano
+<div style="margin-top:6px">
+Crafted with ❤️ by D&amp;D A Digital Creative Studio
+</div>
+</div>
 
-      <!-- PHOTOS -->
-      <section class="section" id="foto">
-        <div class="card">
-          <div class="kicker">Kategori</div>
-          <h2 class="h">Foto Devano</h2>
-          <div class="muted" style="text-align:center;font-size:.92rem;line-height:1.6;">
-            Galeri disusun vertikal agar rapi dan terasa mewah. Klik foto untuk melihat penuh.
-          </div>
+</div>
+</div>
 
-          <div class="photo-stack" id="photoStack">
-            <div class="photo" data-src="DEVANO-CHILDHOOD-01.JPG">
-              <img src="DEVANO-CHILDHOOD-01.JPG" alt="Devano Childhood">
-            </div>
-            <div class="photo" data-src="DEVANO-FAMILY-01.JPG">
-              <img src="DEVANO-FAMILY-01.JPG" alt="Devano Family">
-            </div>
-            <div class="photo" data-src="DEVANO-HERO-01.JPG">
-              <img src="DEVANO-HERO-01.JPG" alt="Devano Hero">
-            </div>
-            <div class="photo" data-src="DEVANO-STORY-01.JPG">
-              <img src="DEVANO-STORY-01.JPG" alt="Devano Story 1">
-            </div>
-            <div class="photo" data-src="DEVANO-STORY-02.JPG">
-              <img src="DEVANO-STORY-02.JPG" alt="Devano Story 2">
-            </div>
-            <div class="photo" data-src="DEVANO-PRAYER-01.JPG">
-              <img src="DEVANO-PRAYER-01.JPG" alt="Devano Prayer">
-            </div>
-            <div class="photo" data-src="DEVANO-EXTRA-01.JPG">
-              <img src="DEVANO-EXTRA-01.JPG" alt="Devano Extra">
-            </div>
-          </div>
-        </div>
-      </section>
+<audio id="bgm" src="backsound.mp3" loop></audio>
 
-      <!-- MAPS -->
-      <section class="section" id="maps">
-        <div class="card">
-          <div class="kicker">Kategori</div>
-          <h2 class="h">Maps</h2>
-
-          <p class="para" style="font-size:.98rem;">
-            Lokasi acara berada di <strong>Banten Indah Permai, Blok K3 No. 21</strong>.
-            Silakan gunakan tombol di bawah untuk membuka navigasi dan mempermudah perjalanan.
-          </p>
-
-          <div style="margin-top:14px;">
-            <a class="btn-outline" target="_blank" rel="noopener" href="https://maps.app.goo.gl/a6btRtvwYZqkfsDr5">
-              Buka Lokasi di Google Maps
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- CLOSING -->
-      <section class="section" id="penutup">
-        <div class="card">
-          <div class="kicker">Penutup</div>
-
-          <div class="arab">جَزَاكُمُ ٱللَّٰهُ خَيْرًا</div>
-          <div class="latin">Jazakumullahu khairan</div>
-
-          <p class="para">
-            Semoga Allah SWT senantiasa melimpahkan keberkahan, kesehatan, dan kebaikan
-            kepada kita semua. Atas kehadiran dan doa restunya, kami ucapkan terima kasih.
-          </p>
-
-          <div style="margin-top:14px;text-align:center;font-weight:900;letter-spacing:.06em;text-transform:uppercase;">
-            Brandon Tan
-          </div>
-          <div class="muted" style="text-align:center;margin-top:6px;">
-            Orang tua dari Devano Vandrean Tan
-          </div>
-        </div>
-      </section>
-
-      <div class="footer">
-        © <span id="y"></span> Undangan Khitanan Devano
-      </div>
-
-    </main>
-  </div>
-
-  <!-- MODAL -->
-  <div class="modal" id="modal">
-    <div class="modal-inner">
-      <div class="modal-top">
-        <div class="cap">Preview Foto</div>
-        <button class="xbtn" id="closeBtn" aria-label="Tutup">✕</button>
-      </div>
-      <div class="modal-img">
-        <img id="modalImg" src="" alt="Preview">
-      </div>
-    </div>
-  </div>
-
-  <!-- AUDIO -->
-  <audio id="bgm" src="backsound.mp3" preload="auto" loop></audio>
-
-  <script>
-    // Year
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    // Theme
-    const root = document.documentElement;
-    const savedTheme = localStorage.getItem('inv_theme') || 'dark';
-    root.setAttribute('data-theme', savedTheme);
-
-    const btnTheme = document.getElementById('btnTheme');
-    const themeIcon = document.getElementById('themeIcon');
-    const themeText = document.getElementById('themeText');
-
-    function syncThemeUI(){
-      const t = root.getAttribute('data-theme') || 'dark';
-      if(t === 'light'){
-        themeIcon.textContent = '☀️';
-        themeText.textContent = 'Light';
-      }else{
-        themeIcon.textContent = '🌙';
-        themeText.textContent = 'Dark';
-      }
-    }
-    syncThemeUI();
-
-    btnTheme.addEventListener('click', ()=>{
-      const t = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      root.setAttribute('data-theme', t);
-      localStorage.setItem('inv_theme', t);
-      syncThemeUI();
-    });
-
-    // Cover -> App + Audio
-    const cover = document.getElementById('cover');
-    const app = document.getElementById('app');
-    const btnOpen = document.getElementById('btnOpen');
-    const btnOpenNoAudio = document.getElementById('btnOpenNoAudio');
-
-    const bgm = document.getElementById('bgm');
-    const btnAudio = document.getElementById('btnAudio');
-    let audioOn = true;
-
-    function setAudioUI(){
-      btnAudio.textContent = audioOn ? '🔊 Musik: ON' : '🔇 Musik: OFF';
-    }
-    setAudioUI();
-
-    async function tryPlay(){
-      try{
-        bgm.volume = 0.35;
-        await bgm.play();
-      }catch(e){
-        // autoplay might be blocked; user can tap music button later
-        audioOn = false;
-        setAudioUI();
-      }
-    }
-
-    function openInvitation(withAudio){
-      cover.style.display = 'none';
-      app.style.display = 'block';
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-
-      if(withAudio){
-        audioOn = true;
-        setAudioUI();
-        tryPlay();
-      }else{
-        audioOn = false;
-        setAudioUI();
-        bgm.pause();
-        bgm.currentTime = 0;
-      }
-    }
-
-    btnOpen.addEventListener('click', ()=> openInvitation(true));
-    btnOpenNoAudio.addEventListener('click', (e)=>{ e.preventDefault(); openInvitation(false); });
-
-    btnAudio.addEventListener('click', async ()=>{
-      if(audioOn){
-        audioOn = false;
-        bgm.pause();
-        setAudioUI();
-      }else{
-        audioOn = true;
-        setAudioUI();
-        await tryPlay();
-      }
-    });
-
-    // Tabs active on scroll
-    const tabs = document.querySelectorAll('.tab');
-    const sections = ['jadwal','foto','maps'].map(id => document.getElementById(id)).filter(Boolean);
-
-    function setActive(id){
-      tabs.forEach(t=>{
-        t.classList.toggle('active', t.dataset.tab === id);
-      });
-    }
-
-    function onScroll(){
-      const y = window.scrollY + (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navH')) || 64) + 20;
-      let current = 'jadwal';
-      for(const s of sections){
-        if(s.offsetTop <= y) current = s.id;
-      }
-      setActive(current);
-    }
-
-    document.addEventListener('scroll', ()=>{ if(app.style.display==='block') onScroll(); }, {passive:true});
-
-    // Smooth scroll for tabs
-    document.getElementById('tabs').addEventListener('click', (e)=>{
-      const a = e.target.closest('a[href^="#"]');
-      if(!a) return;
-      e.preventDefault();
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-    });
-
-    // Photo modal
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modalImg');
-    const closeBtn = document.getElementById('closeBtn');
-
-    function openModal(src){
-      modalImg.src = src;
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal(){
-      modal.classList.remove('open');
-      modalImg.src = '';
-      document.body.style.overflow = '';
-    }
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
-
-    document.getElementById('photoStack').addEventListener('click', (e)=>{
-      const ph = e.target.closest('.photo');
-      if(!ph) return;
-      const src = ph.getAttribute('data-src');
-      if(src) openModal(src);
-    });
-
-    // Hide broken images to keep layout clean
-    document.querySelectorAll('#photoStack img').forEach(img=>{
-      img.addEventListener('error', ()=>{
-        const p = img.closest('.photo');
-        if(p) p.style.display = 'none';
-      });
-    });
-
-  </script>
+<script>
+document.getElementById("y").textContent=new Date().getFullYear();
+document.getElementById("open").onclick=()=>{
+  document.getElementById("cover").style.display="none";
+  document.getElementById("app").style.display="block";
+  const a=document.getElementById("bgm");
+  a.volume=0.35;
+  a.play();
+};
+</script>
 
 </body>
 </html>
